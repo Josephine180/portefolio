@@ -1,0 +1,26 @@
+{
+  "name": "portefolio",
+  "version": "1.0.0",
+  "description": "Projet d'application web de course à pied.",
+  "homepage": "https://github.com/Josephine180/portefolio#readme",
+  "bugs": {
+    "url": "https://github.com/Josephine180/portefolio/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Josephine180/portefolio.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon ./backend/server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
