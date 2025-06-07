@@ -16,60 +16,56 @@
             "duration": 45,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           },
-          {/
+          {
             "session_order": 2,
             "title": "VMA courte 10x(30s -30s)",
             "distance_km": 2,
-            "description": "La séance débute par 5 minutes de marche active. Elle se poursuit par 2 kilomètres de course continue à un rythme modéré. Enfin, un retour au calme de 5 minutes en marchant est prévu.",
-            "advice": "L’intensité doit rester confortable : courir sans être essoufflé, zone d'effort modérée (70 % FCM).",
+            "description": "Après échauffement (20 min de footing, PPG et 3 accélérations) effort maximal pendant 30 secondes et ensuite 30 secondes de récupération active. A répéter 10 fois. Finir la séance par 10 min de footing pour détendre les muscles et baisser les pulsations cardiaques. ",
+            "advice": "Intensité à 105% de la VMA.",
             "advice_post_session": "Faire 5 à 10 min d'étirements légers pour favoriser la récupération.",
-            "duration": 23,
+            "duration": 55,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           },
           {
             "session_order": 3,
-            "title": "Courir 2,5 km",
-            "distance_km": 2.5,
-            "description": "Après 10 min de marche active, courir 2,5 km sans s'arrêter. Finir par 5 min de marche pour faciliter la récupération.",
+            "title": "1h footing",
+            "description": "1h en aisance respirtoire. Ne pas hésiter à courir moins vite si besoin.",
             "advice": "Courir en aisance respiratoire, autour de 70 % de la fréquence cardiaque maximale.",
-            "advice_post_session": "Étirements classiques + douche tiède si jambes lourdes.",
-            "duration": 31,
+            "advice_post_session": "Étirements classiques.",
+            "duration": 60,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           }
         ]
       },
       {
         "week_number": 2,
-        "description": "Courir 3 kilomètres.",
+        "description": "2ème semaine du 1er cycle",
         "sessions": [
           {
             "session_order": 1,
-            "title": "Courir 2 km en continu",
-            "distance_km": 2,
-            "description": "Après 10 min de marche active, courir 2 km sans s'arrêter. Finir par 10 min de marche pour faciliter la récupération.",
-            "advice": "L’objectif est de rester en aisance respiratoire, à 70 % de FCM maximum.",
-            "advice_post_session": "Étirements de 10 minutes après la douche.",
-            "duration": 33,
+            "title": "VMA courte 10x(45s - 45s)",
+            "description": "Après échauffement (20 min de footing, PPG et 3 accélérations) effort maximal pendant 45 secondes et ensuite 45secondes de récupération active. A répéter 10 fois. Finir la séance par 10 min de footing pour détendre les muscles et baisser les pulsations cardiaques.",
+            "advice": "Courir à 105% de sa VMA",
+            "advice_post_session": "Faire des étirements légers pour favoriser la récupération.",
+            "duration": 60,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           },
           {
             "session_order": 2,
-            "title": "Courir 2,5 km en continu",
-            "distance_km": 2.5,
-            "description": "Après 10 min de marche active, courir 2,5 km sans s'arrêter. Finir par 10 min de marche pour faciliter la récupération.",
+            "title": "Courir 45 min",
+            "description": "Courir 45 min en aisance respiratoire. Ne pas hésiter à courir moins vite si besoin.",
             "advice": "Courir confortablement, sans forcer, dans une zone d'effort modérée.",
-            "advice_post_session": "Étirements ciblés jambes et hanches.",
-            "duration": 36,
+            "advice_post_session": "Étirements aussitôt terminé",
+            "duration": 45,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           },
           {
             "session_order": 3,
-            "title": "Courir 3 km",
-            "distance_km": 3,
-            "description": "Après 10 min de marche active, courir 3 km sans s'arrêter. Finir par 5 min de marche pour faciliter la récupération.",
-            "advice": "Rester dans sa zone d’endurance fondamentale. Garder une respiration aisée.",
+            "title": "1h de footing sur terrain vallonné",
+            "description": "courir 1h en aisance respiratoire sur un terrain vallonné.",
+            "advice": "Rester dans sa zone d’endurance fondamentale. Garder une respiration aisée. Un terrain vallonné permet le renforcement musculaire naturel.",
             "advice_post_session": "Étirements, puis hydratation, puis collation riche en glucides complexes.",
-            "duration": 40,
+            "duration": 60,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           }
         ]
