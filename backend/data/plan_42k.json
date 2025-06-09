@@ -1,11 +1,109 @@
 {
     "type": "Marathon (42,195km)",
     "duration": "12 weeks",
-    "description": "Ce plan est découpé en 3 cycles. Ce programme contient 3 séances hebdomadaires avec une augmentation progressive du volume et de l'intensité. Pour suivre ce plan, vous devez pouvoir être capable de courir 10 km.",
+    "description": "Ce plan est découpé en 3 cycles. Ce programme contient 3 séances hebdomadaires avec une augmentation progressive du volume et de l'intensité. Pour suivre ce plan, vous devez pouvoir être capable de courir un semi-marathon en 2h20-2h30. Pour le premier cycle entraînez-vous de préférence le mardi, jeudi et samedi. Pour les deux autres privilégiez le mercredi, samedi et dimanche.",
     "weeks": [
       {
         "week_number": 1,
-        "description": "Mise en route progressive. Semaine légère pour poser les bases. Gardez une journée de repos après votre séance.",
+        "description": "Mise en route progressive. Semaine légère pour poser les bases. Gardez une journée de repos entre chaque séance.",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "1heure de footing - mardi",
+            "description": "Effectuer 1 heure d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "L’objectif n’est pas la vitesse, mais de courir en aisance respiratoire. Pour ceux qui utilisent un capteur cardiaque, il est suggéré de rester autour de 70 % de la fréquence cardiaque maximale.",
+            "advice_post_session": "Faire 5 à 10 minutes d'étirements légers.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          },
+          {
+            "session_order": 2,
+            "title": "1 heure de footing sur terrain vallonné - jeudi",
+            "description": "Footing en aisance respiratoire. Le terrain vallonné fait travailler le renforcement musculaire naturellement. Séance plaisir, ne pas hésiter à ralentir si besoin.",
+            "advice": "Être à l’écoute de son corps, adapter le rythme si besoin. Ne pas dépasser 70 % de sa FCmax.",
+            "advice_post_session": "Faire 5 à 10 minutes d'étirements légers pour favoriser la récupération. Les parties rapides se font à 90-100 % du cardio.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          },
+          {
+            "session_order": 3,
+            "title": "1 heure 30 minutes de footing - samedi",
+            "description": "1 heure 30 minutes en aisance respiratoire. Ne pas hésiter à courir moins vite si besoin.",
+            "advice": "Hydratez-vous au minimum toutes les 20 minutes pendant la séance. Courir en aisance respiratoire, autour de 70 % de la fréquence cardiaque maximale. Profitez-en pour tester votre tenue et votre matériel (gourdes, gilet d'hydratation, gels etc.)",
+            "advice_post_session": "Étirements classiques, pas trop amples.",
+            "duration": 90,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée, boisson de récupération si besoin."]
+          }
+        ]
+      },
+      {
+        "week_number": 2,
+        "description": "Cycle 1: augmentation progressive des durées.",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "1 heure de footing - mardi",
+            "description":"Effectuer 1 heure d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "Courir à 60- 70% de sa VMA. Vous devez pouvoir parler en courant.",
+            "advice_post_session": "Faire des étirements légers pour favoriser la récupération.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          },
+          {
+            "session_order": 2,
+            "title": "1 heure 15 minutes avec 5 minutes plus vite - jeudi",
+            "description": "Footing 1 heure en aisance respiratoire puis 5 minutes de course allure rapide. Finir par 10 minutes de course lente.",
+            "advice": "Courir confortablement, sans forcer, dans une zone d'effort modérée. Pour les 5 minutes rapides, courir autour de 80% de sa FCmax. Les 10 dernières minutes se feront à 60% de la fréquence cardiaque.",
+            "advice_post_session": "Étirements légers.",
+            "duration": 75,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée. Les pertes en eau sont importantes."]
+          },
+          {
+            "session_order": 3,
+            "title": "1h45 de footing sur terrain plat - samedi",
+            "description": "1h45 en aisance respiratoire. Ne pas hésiter à courir moins vite si besoin.",
+            "advice": "Boire une gorgée d'eau toutes les 20 minutes minimum. Rester dans sa zone d’endurance fondamentale. Garder une respiration aisée. ",
+            "advice_post_session": "Étirements, puis hydratation, puis collation riche en glucides complexes.",
+            "duration": 105,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          }
+        ]
+      },
+      {
+        "week_number": 3,
+        "description": "3ème semaine du 1er cycle: augmentation du volume",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "1h de footing - mardi",
+            "description": "Effectuer 1h d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "Courir à 60- 70% de sa VMA.",
+            "advice_post_session": "Étirements après la séance, pas trop amples pour ne pas casser les fibres musculaires déjà bien sollicitées.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation, fruit ou compote en récupération."]
+          },
+          {
+            "title": "1 heure 15 minutes avec 10 minutes plus vite - jeudi",
+            "description": "Footing 55 minutes en aisance respiratoire puis 10 minutes de course allure rapide. Finir par 10 minutes de course lente.",
+            "advice": "Courir confortablement les 55 minutes (65 - 70%). Pour les 10 minutes rapides, courir autour de 80% de sa FCmax. Les 10 dernières minutes se feront à 60% de la fréquence cardiaque.",
+            "advice_post_session": "Étirements légers.",
+            "duration": 75,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée. Les pertes en eau sont importantes."]
+          },
+          {
+            "session_order": 3,
+            "title": "2 heures de footing sur route - samedi",
+            "description": "Effectuer 2 heures de course en aisance respiratoire. Vous devez pouvoir parler en courant.",
+            "advice": "Profitez-en pour tester le matériel. Boire toutes les 20 minutes minimum. Rester dans sa zone d’endurance fondamentale (70% de la fréquence cardiaque maximale). Garder une respiration aisée.",
+            "advice_post_session": "Douche fraîche sur les jambes, étirements + hydratation.",
+            "duration": 120,
+            "nutrition_tips": ["Hydratation et collation post-effort."]
+          }
+        ]
+      },
+      {
+        "week_number": 4,
+        "description": "Semaine de régénération : récupération des efforts faits pendant le premier cycle.",
         "sessions": [
           {
             "session_order": 1,
@@ -18,55 +116,187 @@
           },
           {
             "session_order": 2,
-            "title": "45 minutes de footing sur terrain vallonné - jeudi",
-            "description": "Footing en aisance respiratoire. Le terrain vallonné fait travailler le renforcement musculaire naturellement. Séance plaisir, ne pas hésiter à ralentir si besoin.",
-            "advice": "Être à l’écoute de son corps, adapter le rythme si besoin. Ne pas dépasser 70 % de sa FCmax.",
-            "advice_post_session": "Faire 5 à 10 minutes d'étirements légers pour favoriser la récupération. Les parties rapides se font à 90-100 % du cardio.",
-            "duration": 45,
-            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+            "title": "Repos",
+            "description": "Repos : profitez-en pour vous reposer.",
+            "advice": "Le repos facilite l'assimilation.",
+            "advice_post_session": "Manger équilibré et bien dormir.",
+            "duration": 0,
+            "nutrition_tips": ["Hydratation et bonne alimentation."]
           },
           {
             "session_order": 3,
-            "title": "60 minutes de footing - samedi",
-            "description": "60 minutes en aisance respiratoire. Ne pas hésiter à courir moins vite si besoin.",
-            "advice": "Hydratez-vous au minimum toutes les 20 minutes pendant la séance. Courir en aisance respiratoire, autour de 70 % de la fréquence cardiaque maximale.",
-            "advice_post_session": "Étirements classiques, pas trop amples.",
+            "title": "1 heure de sortie longue sur route",
+            "description": "1 heure en aisance respiratoire (70% de la fréquence cardiaque maximale). Ne pas hésiter à courir moins vite si besoin.",
+            "advice": "Courir sur route ou bitume pour habituer son corps.Rester en endurance fondamentale (zone 2), éviter les pics de fréquence cardiaque. Buvez au minimum toutes les 20 minutes.",
+            "advice_post_session": "Étirements.",
             "duration": 60,
-            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+            "nutrition_tips": ["Hydratation."]
           }
         ]
       },
       {
         "week_number": 5,
-        "description": "Semaine de régénération : allégement de l'entraînement pour une meilleure récupération. 2 entraînements le mercredi et samedi.",
+        "description": "Semaine de régénération: allégement de l'entraînement pour une meilleure récupération. 2 entraînements le mercredi et samedi.",
         "sessions": [
           {
             "session_order": 1,
             "title": "45 minutes de footing - mercredi",
-            "description": "Effectuer 45 minutes d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
-            "advice": "Courir à 60-70 % de sa VMA.",
+            "description":"Effectuer 45 minutes d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "Courir à 60- 70% de sa VMA.",
             "advice_post_session": "Faire des étirements légers pour favoriser la récupération.",
             "duration": 45,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           },
           {
             "session_order": 2,
-            "title": "Repos",
+            "title": "repos",
             "description": "Pas de séance aujourd'hui, reposez-vous.",
             "advice": "Le repos aide à l'assimilation.",
-            "advice_post_session": "Reposez-vous.",
+            "advice_post_session": "Reposez-vous",
             "duration": 0,
             "nutrition_tips": ["Hydratation, alimentation saine et équilibrée."]
           },
           {
             "session_order": 3,
             "title": "45 minutes de footing - samedi",
-            "description": "Effectuer 45 minutes d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
-            "advice": "Courir à 60-70 % de sa VMA.",
+            "description":"Effectuer 45 minutes d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "Courir à 60- 70% de sa VMA.",
             "advice_post_session": "Faire des étirements légers pour favoriser la récupération.",
             "duration": 45,
             "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
           }
+        ]
+      },
+      {
+        "week_number": 6,
+        "description": "Cycle 2: entraînez-vous de préférence le mercredi et le samedi et dimanche pour cumuler les kilomètres sur une courte période.",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "1h de footing avec 5 min plus rapide - mercredi",
+            "description": "45 minutes en aisance respiratoire (70% de la fréquence cardiaque maximale). Puis faites 5 min de course un peu plus rapide (80% de sa FCmax). Finir par 10 min en aisance respiratoire. ",
+            "advice": "Toujours garder l’aisance respiratoire. Les 5 minutes rapides ne sont pas un sprint ! ",
+            "advice_post_session": "Étirements statiques, relâchement complet.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation après et pendant les heures suivant la séance, puis alimentation équilibrée."]
+          },
+          {
+            "session_order": 2,
+            "title": "1h avec 10 min plus vite - samedi",
+            "description": "40 minutes en aisance respiratoire (70% de la fréquence cardiaque maximale). Puis faites 10 min de course un peu plus rapide (80% de sa FCmax). Finir par 10 min en aisance respiratoire.",
+            "advice": "Les 10 minutes rapides ne sont pas un sprint ! Vous devez aller vite en restant à l'aise.",
+            "advice_post_session": "Manger équilibré et bien dormir.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation après la course et les heures d'après."]
+          },
+          {
+            "session_order": 3,
+            "title": "1h30 de sortie longue sur route - dimanche",
+            "description": "1h 30 minutes en aisance respiratoire (70% de la fréquence cardiaque maximale). Ne pas hésiter à courir moins vite si besoin.",
+            "advice": "Courir sur route ou bitume pour habituer son corps.Rester en endurance fondamentale (zone 2), éviter les pics de fréquence cardiaque. Buvez au minimum toutes les 20 minutes.",
+            "advice_post_session": "Étirements.",
+            "duration": 90,
+            "nutrition_tips": ["Hydratation."]
+          }
+        ]
+      },
+      {
+        "week_number": 7,
+        "description": "Augmentation du volume de course",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "1h de footing avec 8 min plus rapide - mercredi",
+            "description": "42 minutes en aisance respiratoire (70% de la fréquence cardiaque maximale). Puis faites 8 min de course un peu plus rapide (80% de sa FCmax). Finir par 10 min en aisance respiratoire. ",
+            "advice": "Toujours garder l’aisance respiratoire. Les 8 minutes rapides ne sont pas un sprint ! ",
+            "advice_post_session": "Étirements, sans grandes amplitudes.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation après et pendant les heures suivant la séance, puis alimentation équilibrée."]
+          },
+          {
+            "session_order": 2,
+            "title": "1h15 minutes de footing - samedi",
+            "description": "Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
+            "advice": "Hydratez-vous toutes les 20 minutes au minimum. Garder le rythme, ne pas chercher à accélérer.",
+            "advice_post_session": "Étirements classiques, bien s'hydrater.",
+            "duration": 75,
+            "nutrition_tips": ["Hydratation."]
+          },
+          {
+            "session_order": 3,
+            "title": "1h45 de footing - dimanche",
+            "description": "Séance difficile. Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
+            "advice": "Boire une gorgée toutes les 20 min.Être à l’écoute de son corps, adapter le rythme si besoin. Ne pas dépasser 70% de sa FCmax.",
+            "advice_post_session": "Hydratation et étirements.",
+            "duration": 105,
+            "nutrition_tips": ["Hydratation, repas complet dans les 2 h."]
+          }
+        ]
+      },
+      {
+        "week_number": 8,
+        "description": "Augmentation du volume de course : charge maximale",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "1h de footing avec 10 min plus rapide - mercredi",
+            "description": "40 minutes en aisance respiratoire (70% de la fréquence cardiaque maximale). Puis faites 10 min de course un peu plus rapide (80% de sa FCmax). Finir par 10 min en aisance respiratoire. ",
+            "advice": "Toujours garder l’aisance respiratoire. Les 10 minutes rapides ne sont pas un sprint ! ",
+            "advice_post_session": "Étirements, sans grandes amplitudes.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation après et pendant les heures suivant la séance, puis alimentation équilibrée."]
+          },
+          {
+            "session_order": 2,
+            "title": "1h minutes de footing - samedi",
+            "description": "Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
+            "advice": "Hydratez-vous toutes les 20 minutes au minimum. Garder le rythme, ne pas chercher à accélérer.",
+            "advice_post_session": "Étirements classiques, bien s'hydrater.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation."]
+          },
+          {
+            "session_order": 3,
+            "title": "2h de footing - dimanche",
+            "description": "Séance difficile. Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
+            "advice": "Boire une gorgée toutes les 20 min.Être à l’écoute de son corps, adapter le rythme si besoin. Ne pas dépasser 70% de sa FCmax.",
+            "advice_post_session": "Hydratation et étirements.",
+            "duration": 120,
+            "nutrition_tips": ["Hydratation, repas complet dans les 2 h."]
+          }
+        ]
+      },
+      {
+        "week_number": 9,
+        "description": "Dernière semaine de préparation : diminution des charges.",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "1h de footing avec 10 min plus rapide - mercredi",
+            "description": "40 minutes en aisance respiratoire (70% de la fréquence cardiaque maximale). Puis faites 10 min de course un peu plus rapide (80% de sa FCmax). Finir par 10 min en aisance respiratoire. ",
+            "advice": "Toujours garder l’aisance respiratoire. Les 8 minutes rapides ne sont pas un sprint ! ",
+            "advice_post_session": "Étirements, sans grandes amplitudes.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation après et pendant les heures suivant la séance, puis alimentation équilibrée."]
+            },
+            {
+            "session_order": 2,
+            "title": "1h15 minutes de footing - samedi",
+            "description": "Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
+            "advice": "Hydratez-vous toutes les 20 minutes au minimum. Garder le rythme, ne pas chercher à accélérer.",
+            "advice_post_session": "Étirements classiques, bien s'hydrater.",
+            "duration": 75,
+            "nutrition_tips": ["Hydratation."]
+            },
+            {
+            "session_order": 3,
+            "title": "1h de footing - dimanche",
+            "description": "Séance difficile. Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
+            "advice": "Boire une gorgée toutes les 20 min.Être à l’écoute de son corps, adapter le rythme si besoin. Profitez-en pour tester votre matériel en vue du semi-marathon.",
+            "advice_post_session": "Hydratation et étirements.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation, alimentation riche en glucides."]
+            }
         ]
       },
       {
@@ -75,31 +305,31 @@
         "sessions": [
           {
             "session_order": 1,
-            "title": "30 minutes de footing sur terrain plat",
+            "title": "30 min sur terrain plat",
             "description": "Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
-            "advice": "Toujours garder l’aisance respiratoire. Les 8 minutes rapides ne sont pas un sprint !",
+            "advice": "Toujours garder l’aisance respiratoire. Les 8 minutes rapides ne sont pas un sprint ! ",
             "advice_post_session": "Étirements, sans grandes amplitudes.",
             "duration": 30,
             "nutrition_tips": ["Hydratation après et pendant les heures suivant la séance, puis alimentation équilibrée."]
-          },
-          {
+            },
+            {
             "session_order": 2,
             "title": "Repos",
-            "description": "Pas de séance aujourd'hui. Ce repos aide votre corps à assimiler le travail accompli les semaines précédentes.",
+            "description": "Pas de séance aujourd'hui. Ce repos aide votre corps à assimiler le travail accomplit les semaines précédentes.",
             "advice": "Restez chez vous et reposez-vous.",
             "advice_post_session": "Repos et bon sommeil.",
             "duration": 0,
             "nutrition_tips": ["Hydratation."]
-          },
-          {
+            },
+            {
             "session_order": 3,
             "title": "Jour de course : échauffement",
-            "description": "Échauffez-vous une dizaine de minutes en marche rapide. Les premiers kilomètres de la course serviront d'échauffement.",
-            "advice": "Ne partez pas trop vite. Mieux vaut pouvoir accélérer sur les derniers kilomètres. Prenez du plaisir ! Mettez-vous sur la ligne de départ 5 à 10 minutes avant l'heure prévue. Placez-vous en milieu de peloton.",
+            "description": "Echauffez-vous une dizaine de minutes en marche rapide. Les premiers kilomètres de la course serviront d'échauffement.",
+            "advice": "Ne partez pas trop vite. Mieux vaut pouvoir accélérer sur les derniers kilomètres. Prenez du plaisir ! Mettez-vous sur la ligne de départ 5 à 10 minute avant l'heure prévue. Placez-vous en milieu de peloton.",
             "advice_post_session": "Hydratation et étirements.",
-            "duration": 10,
-            "nutrition_tips": ["Hydratation, alimentation riche en glucides après la course. N'hésitez pas à prendre une boisson de récupération."]
-          }
+            "duration": 60,
+            "nutrition_tips": ["Hydratation, alimentation riche en glucides après la course. N'hésitez pas à prendre une boisson de ."]
+            }
         ]
       }
     ]
