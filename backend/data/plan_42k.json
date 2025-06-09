@@ -1,0 +1,106 @@
+{
+    "type": "Marathon (42,195km)",
+    "duration": "12 weeks",
+    "description": "Ce plan est découpé en 3 cycles. Ce programme contient 3 séances hebdomadaires avec une augmentation progressive du volume et de l'intensité. Pour suivre ce plan, vous devez pouvoir être capable de courir 10 km.",
+    "weeks": [
+      {
+        "week_number": 1,
+        "description": "Mise en route progressive. Semaine légère pour poser les bases. Gardez une journée de repos après votre séance.",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "45 minutes de footing - mardi",
+            "description": "Effectuer 45 minutes d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "L’objectif n’est pas la vitesse, mais de courir en aisance respiratoire. Pour ceux qui utilisent un capteur cardiaque, il est suggéré de rester autour de 70 % de la fréquence cardiaque maximale.",
+            "advice_post_session": "Faire 5 à 10 minutes d'étirements légers.",
+            "duration": 45,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          },
+          {
+            "session_order": 2,
+            "title": "45 minutes de footing sur terrain vallonné - jeudi",
+            "description": "Footing en aisance respiratoire. Le terrain vallonné fait travailler le renforcement musculaire naturellement. Séance plaisir, ne pas hésiter à ralentir si besoin.",
+            "advice": "Être à l’écoute de son corps, adapter le rythme si besoin. Ne pas dépasser 70 % de sa FCmax.",
+            "advice_post_session": "Faire 5 à 10 minutes d'étirements légers pour favoriser la récupération. Les parties rapides se font à 90-100 % du cardio.",
+            "duration": 45,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          },
+          {
+            "session_order": 3,
+            "title": "60 minutes de footing - samedi",
+            "description": "60 minutes en aisance respiratoire. Ne pas hésiter à courir moins vite si besoin.",
+            "advice": "Hydratez-vous au minimum toutes les 20 minutes pendant la séance. Courir en aisance respiratoire, autour de 70 % de la fréquence cardiaque maximale.",
+            "advice_post_session": "Étirements classiques, pas trop amples.",
+            "duration": 60,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          }
+        ]
+      },
+      {
+        "week_number": 5,
+        "description": "Semaine de régénération : allégement de l'entraînement pour une meilleure récupération. 2 entraînements le mercredi et samedi.",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "45 minutes de footing - mercredi",
+            "description": "Effectuer 45 minutes d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "Courir à 60-70 % de sa VMA.",
+            "advice_post_session": "Faire des étirements légers pour favoriser la récupération.",
+            "duration": 45,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          },
+          {
+            "session_order": 2,
+            "title": "Repos",
+            "description": "Pas de séance aujourd'hui, reposez-vous.",
+            "advice": "Le repos aide à l'assimilation.",
+            "advice_post_session": "Reposez-vous.",
+            "duration": 0,
+            "nutrition_tips": ["Hydratation, alimentation saine et équilibrée."]
+          },
+          {
+            "session_order": 3,
+            "title": "45 minutes de footing - samedi",
+            "description": "Effectuer 45 minutes d'effort en aisance respiratoire. Courir moins vite si besoin. Séance facile.",
+            "advice": "Courir à 60-70 % de sa VMA.",
+            "advice_post_session": "Faire des étirements légers pour favoriser la récupération.",
+            "duration": 45,
+            "nutrition_tips": ["Hydratation aussitôt la séance terminée."]
+          }
+        ]
+      },
+      {
+        "week_number": 10,
+        "description": "Régénération et compétition : semaine de course",
+        "sessions": [
+          {
+            "session_order": 1,
+            "title": "30 minutes de footing sur terrain plat",
+            "description": "Footing en aisance respiratoire, ne pas hésiter à ralentir si besoin.",
+            "advice": "Toujours garder l’aisance respiratoire. Les 8 minutes rapides ne sont pas un sprint !",
+            "advice_post_session": "Étirements, sans grandes amplitudes.",
+            "duration": 30,
+            "nutrition_tips": ["Hydratation après et pendant les heures suivant la séance, puis alimentation équilibrée."]
+          },
+          {
+            "session_order": 2,
+            "title": "Repos",
+            "description": "Pas de séance aujourd'hui. Ce repos aide votre corps à assimiler le travail accompli les semaines précédentes.",
+            "advice": "Restez chez vous et reposez-vous.",
+            "advice_post_session": "Repos et bon sommeil.",
+            "duration": 0,
+            "nutrition_tips": ["Hydratation."]
+          },
+          {
+            "session_order": 3,
+            "title": "Jour de course : échauffement",
+            "description": "Échauffez-vous une dizaine de minutes en marche rapide. Les premiers kilomètres de la course serviront d'échauffement.",
+            "advice": "Ne partez pas trop vite. Mieux vaut pouvoir accélérer sur les derniers kilomètres. Prenez du plaisir ! Mettez-vous sur la ligne de départ 5 à 10 minutes avant l'heure prévue. Placez-vous en milieu de peloton.",
+            "advice_post_session": "Hydratation et étirements.",
+            "duration": 10,
+            "nutrition_tips": ["Hydratation, alimentation riche en glucides après la course. N'hésitez pas à prendre une boisson de récupération."]
+          }
+        ]
+      }
+    ]
+  }
