@@ -13,3 +13,58 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            Int           @id @default(autoincrement())
+  email         String        @unique @db.VarChar(255)
+  password_hash String        @db.VarChar(255)
+  created_at    DateTime      @default(now())
+  trainingPlans TrainingPlan[]
+  feedbacks     Feedback[]
+}
+
+model TrainingPlan {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  goal_type  String    @db.VarChar(100)  // ex: "5K", "10K", "Marathon"
+  goal_time  String    @db.VarChar(50)   // ex: "sub 30min", "sub 4h"
+  created_at DateTime  @default(now())
+  user       User      @relation(fields: [user_id], references: [id])
+  sessions   Session[]
+}
+
+model Session {
+  id               Int          @id @default(autoincrement())
+  training_plan_id Int
+  session_number   Int          // Numéro de la session dans le plan (1, 2, 3...)
+  date             DateTime     @db.Date
+  description      String       @db.Text  // Description de la séance
+  duree            Int          // Durée en minutes
+  completed        Boolean      @default(false)
+  trainingPlan     TrainingPlan @relation(fields: [training_plan_id], references: [id])
+  feedback         Feedback?    // Une session = un feedback max
+  nutritionTip     NutritionTip @relation(fields: [nutrition_tip_id], references: [id])
+  nutrition_tip_id Int
+  @@unique([training_plan_id, session_number])
+}
+
+model Feedback {
+  id               Int     @id @default(autoincrement())
+  session_id       Int     @unique  // One-to-one avec Session
+  user_id          Int     // Relation directe avec User pour faciliter les requêtes
+  energy_level     Int     @db.TinyInt  // 1-10
+  fatigue_level    Int     @db.TinyInt  // 1-10
+  motivation_level Int     @db.TinyInt  // 1-10
+  comment          String? @db.Text
+  created_at       DateTime @default(now())
+  session          Session @relation(fields: [session_id], references: [id])
+  user             User    @relation(fields: [user_id], references: [id])
+}
+
+model NutritionTip {
+  id          Int       @id @default(autoincrement())
+  week_number Int       // Semaine du programme
+  plan_type   String    @db.VarChar(50)  // Type de plan (5K, 10K, etc.)
+  tip_text    String    @db.Text
+  sessions    Session[] // Un tip peut être utilisé par plusieurs sessions
+}
