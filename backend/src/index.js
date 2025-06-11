@@ -15,7 +15,7 @@ async function importData() {
     for (const fileName of planFiles) {
       try {
         const planData = JSON.parse(
-          fs.readFileSync(path.join(process.cwd(), '..', 'data', fileName), 'utf8')
+          fs.readFileSync(path.join(process.cwd(),'backend', 'data', fileName), 'utf8')
         );
         trainingPlansData.push(planData);
         console.log(`Fichier ${fileName} lu avec succès`);
@@ -183,3 +183,5 @@ importData()
     console.error('Échec de l\'import:', error);
     process.exit(1);
   });
+
+export default prisma;

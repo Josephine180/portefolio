@@ -1,24 +1,13 @@
-const express = require('express');
+import express from 'express';
+import prisma from './src/index.js';
+import userRoutes from './routes/user.routes.js';
+
 
 const app = express();
 
-app.use((req, res, next) => {
-    console.log('Message reçu ! ');
-    next();
-});
+app.use(express.json())
 
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-})
+app.use('/users', userRoutes);
 
-app.use((req, res, next) => {
-   res.json({ message: 'Votre requête a bien été reçue !' }); 
-   next();
-});
 
-app.use((req, res) => {
-  console.log('Réponse envoyée avec succès !');
-});
-
-module.exports = app;
+export default app;
