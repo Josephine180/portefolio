@@ -39,6 +39,8 @@ async function importData() {
       data: {
         email: 'test@example.com',
         password_hash: 'hashed_password_here',
+        name: "Dupont",
+        firstname: "Jean",
       }
     });
 

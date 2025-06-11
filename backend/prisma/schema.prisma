@@ -17,6 +17,8 @@ datasource db {
 model User {
   id            Int           @id @default(autoincrement())
   email         String        @unique @db.VarChar(255)
+  name          String
+  firstname     String
   password_hash String        @db.VarChar(255)
   created_at    DateTime      @default(now())
   trainingPlans TrainingPlan[]
