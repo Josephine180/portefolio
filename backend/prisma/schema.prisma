@@ -30,22 +30,37 @@ model TrainingPlan {
   goal_time  String    @db.VarChar(50)   // ex: "sub 30min", "sub 4h"
   created_at DateTime  @default(now())
   user       User      @relation(fields: [user_id], references: [id])
-  sessions   Session[]
+  weeks      Week[]    // Un plan contient plusieurs semaines
+  sessions   Session[] // Garde la relation directe aussi
+}
+
+model Week {
+  id               Int          @id @default(autoincrement())
+  training_plan_id Int
+  week_number      Int          // Numéro de la semaine (1, 2, 3...)
+  description      String?      @db.Text // Description de la semaine
+  trainingPlan     TrainingPlan @relation(fields: [training_plan_id], references: [id])
+  sessions         Session[]    // Une semaine contient plusieurs sessions
+  
+  @@unique([training_plan_id, week_number]) // Éviter les doublons
 }
 
 model Session {
   id               Int          @id @default(autoincrement())
   training_plan_id Int
-  session_number   Int          // Numéro de la session dans le plan (1, 2, 3...)
+  week_id          Int          // Nouvelle relation avec Week
+  session_number   Int          // Numéro de la session dans le plan global
+  session_order    Int          // Ordre dans la semaine (1, 2, 3...)
   date             DateTime     @db.Date
-  description      String       @db.Text  // Description de la séance
+  title            String       @db.VarChar(255) // Titre de la session
+  description      String       @db.Text         // Description détaillée
   duree            Int          // Durée en minutes
   completed        Boolean      @default(false)
   trainingPlan     TrainingPlan @relation(fields: [training_plan_id], references: [id])
+  week             Week         @relation(fields: [week_id], references: [id])
   feedback         Feedback?    // Une session = un feedback max
   nutritionTip     NutritionTip @relation(fields: [nutrition_tip_id], references: [id])
   nutrition_tip_id Int
-  @@unique([training_plan_id, session_number])
 }
 
 model Feedback {

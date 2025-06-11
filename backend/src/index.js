@@ -18,22 +18,23 @@ async function importData() {
           fs.readFileSync(path.join(process.cwd(), '..', 'data', fileName), 'utf8')
         );
         trainingPlansData.push(planData);
-        console.log(`📄 Fichier ${fileName} lu avec succès`);
+        console.log(`Fichier ${fileName} lu avec succès`);
       } catch (error) {
         console.warn(`Impossible de lire ${fileName}:`, error.message);
       }
     }
 
     // 2. Nettoyer la base de données (optionnel - attention en production!)
-    console.log(' Nettoyage de la base...');
+    console.log('Nettoyage de la base...');
     await prisma.feedback.deleteMany({});
     await prisma.session.deleteMany({});
+    await prisma.week.deleteMany({});
     await prisma.trainingPlan.deleteMany({});
     await prisma.nutritionTip.deleteMany({});
     await prisma.user.deleteMany({});
 
     // 3. Créer un utilisateur de test
-    console.log(' Création d\'un utilisateur de test...');
+    console.log('👤 Création d\'un utilisateur de test...');
     const testUser = await prisma.user.create({
       data: {
         email: 'test@example.com',
@@ -45,6 +46,7 @@ async function importData() {
     console.log('Import des plans d\'entraînement...');
     
     let totalNutritionTips = [];
+    let globalSessionCounter = 1;
     
     for (const planData of trainingPlansData) {
       // Créer le plan
@@ -56,14 +58,21 @@ async function importData() {
         }
       });
 
-      let sessionCounter = 1;
-
       // Parcourir chaque semaine du plan
-      for (const week of planData.weeks) {
+      for (const weekData of planData.weeks) {
+        // Créer la semaine
+        const week = await prisma.week.create({
+          data: {
+            training_plan_id: trainingPlan.id,
+            week_number: weekData.week_number,
+            description: weekData.description,
+          }
+        });
+
         // Créer les tips nutritionnels pour cette semaine (éviter les doublons)
         const weekTips = new Set();
         
-        for (const session of week.sessions) {
+        for (const session of weekData.sessions) {
           if (session.nutrition_tips) {
             for (const tip of session.nutrition_tips) {
               weekTips.add(tip);
@@ -76,7 +85,7 @@ async function importData() {
         for (const tipText of weekTips) {
           const nutritionTip = await prisma.nutritionTip.create({
             data: {
-              week_number: week.week_number,
+              week_number: weekData.week_number,
               plan_type: planData.type,
               tip_text: tipText
             }
@@ -86,7 +95,9 @@ async function importData() {
         }
 
         // Créer les sessions de cette semaine
-        for (const session of week.sessions) {
+        for (let sessionIndex = 0; sessionIndex < weekData.sessions.length; sessionIndex++) {
+          const session = weekData.sessions[sessionIndex];
+          
           // Trouver le tip approprié pour cette session
           let nutritionTip = createdTips[0]; // Par défaut, le premier tip de la semaine
           
@@ -103,7 +114,7 @@ async function importData() {
           } else if (!nutritionTip) {
             nutritionTip = await prisma.nutritionTip.create({
               data: {
-                week_number: week.week_number,
+                week_number: weekData.week_number,
                 plan_type: planData.type,
                 tip_text: "Hydratation recommandée après l'effort"
               }
@@ -114,29 +125,35 @@ async function importData() {
           await prisma.session.create({
             data: {
               training_plan_id: trainingPlan.id,
-              session_number: sessionCounter,
-              date: new Date(Date.now() + (sessionCounter - 1) * 24 * 60 * 60 * 1000), // Dates simulées
-              description: `${session.title} - ${session.description}`,
+              week_id: week.id,
+              session_number: globalSessionCounter,
+              session_order: session.session_order,
+              date: new Date(Date.now() + (globalSessionCounter - 1) * 24 * 60 * 60 * 1000), // Dates simulées
+              title: session.title,
+              description: session.description,
               duree: session.duration,
               completed: false,
               nutrition_tip_id: nutritionTip.id,
             }
           });
 
-          sessionCounter++;
+          globalSessionCounter++;
         }
+        
+        console.log(`Semaine ${weekData.week_number} avec ${weekData.sessions.length} sessions importée`);
       }
       
-      console.log(`Plan "${planData.type}" avec ${sessionCounter - 1} sessions importé`);
+      console.log(`Plan "${planData.type}" avec ${planData.weeks.length} semaines importé`);
     }
 
-    console.log(' Import terminé avec succès!');
+    console.log('🎉 Import terminé avec succès!');
     
     // 5. Afficher un résumé
     const stats = await getStats();
     console.log('\n Résumé:');
     console.log(`- ${stats.users} utilisateurs`);
     console.log(`- ${stats.plans} plans d'entraînement`);
+    console.log(`- ${stats.weeks} semaines`);
     console.log(`- ${stats.sessions} sessions`);
     console.log(`- ${stats.nutritionTips} tips nutritionnels`);
 
@@ -149,14 +166,15 @@ async function importData() {
 }
 
 async function getStats() {
-  const [users, plans, sessions, nutritionTips] = await Promise.all([
+  const [users, plans, weeks, sessions, nutritionTips] = await Promise.all([
     prisma.user.count(),
     prisma.trainingPlan.count(),
+    prisma.week.count(),
     prisma.session.count(),
     prisma.nutritionTip.count(),
   ]);
   
-  return { users, plans, sessions, nutritionTips };
+  return { users, plans, weeks, sessions, nutritionTips };
 }
 
 // Exécuter le script
