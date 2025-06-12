@@ -34,7 +34,7 @@ async function importData() {
     await prisma.user.deleteMany({});
 
     // 3. Créer un utilisateur de test
-    console.log('👤 Création d\'un utilisateur de test...');
+    console.log('Création d\'un utilisateur de test...');
     const testUser = await prisma.user.create({
       data: {
         email: 'test@example.com',
@@ -148,7 +148,7 @@ async function importData() {
       console.log(`Plan "${planData.type}" avec ${planData.weeks.length} semaines importé`);
     }
 
-    console.log('🎉 Import terminé avec succès!');
+    console.log('Import terminé avec succès!');
     
     // 5. Afficher un résumé
     const stats = await getStats();

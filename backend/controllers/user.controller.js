@@ -1,4 +1,6 @@
 import prisma from '../src/index.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 // récupération de tous les utilisateurs
 export async function getAllUsers(req, res) {
@@ -52,7 +54,12 @@ export async function createUser(req, res) {
 
     //creation de l'utilisateur
     const newUser = await prisma.user.create({
-      data: { email, password_hash, name },
+      data: { 
+        email,
+        password_hash: hashedPassword,
+        name,
+        firstname,
+      },
     });
     res.status(201).json(newUser);
   } catch(error) {
@@ -67,7 +74,7 @@ export const modifyUser = async(req, res) => {
   if (isNaN(id)) {
     return res.status(400).json({ error: 'ID invalide'});
   }
-  const { email, password_hash, name } = req.body;
+  const { email, password_hash, name, firstname } = req.body;
   try {
     const existing = await prisma.user.findUnique({ where: { id } });
     if (!existing) {
@@ -75,7 +82,7 @@ export const modifyUser = async(req, res) => {
     }
     const updateUser = await prisma.user.update({
       where: {id},
-      data: { email, password_hash, name },
+      data: { email, password_hash, name, firstname },
     });
     res.json(updateUser);
   } catch (error) {
@@ -97,3 +104,51 @@ export const deleteUser = async(req, res) => {
   }
 };
 
+// connexion utilisateur 
+const JWT_SECRET = process.env.JWT_SECRET || '123';
+
+export const register = async (req, res) => {
+  const { email, password, name, firstname } = req.body;
+
+  if (!email || !password) return res.status(400).json({ error: 'Email et mot de passe requis.' });
+
+  try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) return res.status(409).json({ error: 'Email déjà utilisé.' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        password_hash: hashedPassword,
+        name,
+        firstname
+      }
+    });
+
+    res.status(201).json({ message: 'Utilisateur créé', userId: newUser.id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
+};
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(401).json({ error: 'Identifiants invalides.' });
+
+    const isValid = await bcrypt.compare(password, user.password_hash);
+    if (!isValid) return res.status(401).json({ error: 'Identifiants invalides.' });
+
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '4h' });
+
+    res.json({ message: 'Connexion réussie', token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
+};
