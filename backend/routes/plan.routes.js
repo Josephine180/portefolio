@@ -1,10 +1,11 @@
 import express from 'express';
-import { getAllTrainingPlans, createTrainingPlan, getTrainingPlansByUser } from '../controllers/plan.controller.js';
+import { getAllTrainingPlans, createTrainingPlan, getTrainingPlansByUser, getTrainingPlanById } from '../controllers/plan.controller.js';
 
 const router = express.Router();
 
-router.get('/training-plans', getAllTrainingPlans);
+router.get('/', getAllTrainingPlans);
 router.get('/:userId', getTrainingPlansByUser);
+router.get('/id/:planId', getTrainingPlanById);
 router.post('/', createTrainingPlan);
 
 

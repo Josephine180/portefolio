@@ -1,5 +1,6 @@
 import prisma from '../src/index.js';
 
+// creation d'un training plan
 export const createTrainingPlan = async (req, res) => {
 
   const { user_id, goal_type, goal_time }= req.body;
@@ -21,6 +22,7 @@ export const createTrainingPlan = async (req, res) => {
   }
   };
 
+// récupérer un training plan d'un user
 export const getTrainingPlansByUser = async (req, res) => {
   const userId = parseInt(req.params.userId);
 
@@ -43,6 +45,7 @@ export const getTrainingPlansByUser = async (req, res) => {
   }
   };
 
+  // récupérer tous les training plans
   export const getAllTrainingPlans = async (req, res) => {
     try {
       const plans = await prisma.trainingPlan.findMany({
@@ -54,5 +57,24 @@ export const getTrainingPlansByUser = async (req, res) => {
       res.json(plans);
     } catch (error) {
       res.status(500).json({ error: 'Erreur serveur' });
+    }
+  };
+
+  // récupérer un plan précis grâce à l'ID
+  export const getTrainingPlanById = async (req, res) => {
+    const planId = parseInt(req.params.planId);
+    try {
+      const plan = await prisma.trainingPlan.findUnique({
+        where: { id: planId },
+        include: {
+          weeks: true,
+          sessions: true,
+        },
+      });
+      if (!plan) return res.status(404).json({ error: 'Plan non trouvé'});
+      res.json(plan);
+    } catch (error) {
+      console.error("Erreur récupérer un plan par l'ID", error);
+      res.status(500).json({ error: 'Erreur serveur'});
     }
   };
