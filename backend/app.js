@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import trainingPlanRoutes from './routes/plan.routes.js';
 import sessionRoutes from './routes/session.routes.js';
 import nutritionRoutes from './routes/nutrition.routes.js';
-
+import weekRoutes from './routes/week.routes.js';
 
 const app = express();
 
@@ -15,6 +15,7 @@ app.use('/users', userRoutes);
 app.use('/training-plans', trainingPlanRoutes);
 app.use('/sessions', sessionRoutes);
 app.use('/nutrition', nutritionRoutes);
+app.use('/weeks', weekRoutes);
 
 dotenv.config();
 
