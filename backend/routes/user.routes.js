@@ -8,11 +8,11 @@ router.post('/register', register);
 router.post('/login', login);
 
 router.get('/', getAllUsers);
-router.post('/', createUser);
+router.post('/', authenticate, isAdmin, createUser);
 
 router.get('/:id', authenticate, getUserbyId);
-router.put('/:id', modifyUser);
-router.delete('/:id', deleteUser);
+router.put('/:id', authenticate, isAdmin, modifyUser);
+router.delete('/:id', authenticate, isAdmin, deleteUser);
 
 
 
