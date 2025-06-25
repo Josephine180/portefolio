@@ -1,0 +1,8 @@
+.btn-primary {
+    background-color: #4a47a3 !important; /* violet moderne */
+    border-color: #4a47a3 !important;
+  }
+  .btn-primary:hover {
+    background-color: #3a3790 !important;
+    border-color: #3a3790 !important;
+  }
