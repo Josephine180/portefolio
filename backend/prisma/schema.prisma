@@ -20,20 +20,34 @@ model User {
   name          String
   firstname     String
   password_hash String        @db.VarChar(255)
+  role          String        @default("user")
   created_at    DateTime      @default(now())
   trainingPlans TrainingPlan[]
   feedbacks     Feedback[]
+  userTrainingPlans UserTrainingPlan[] 
 }
 
 model TrainingPlan {
   id         Int       @id @default(autoincrement())
-  user_id    Int
   goal_type  String    @db.VarChar(100)  // ex: "5K", "10K", "Marathon"
   goal_time  String    @db.VarChar(50)   // ex: "sub 30min", "sub 4h"
   created_at DateTime  @default(now())
+  user_id    Int
   user       User      @relation(fields: [user_id], references: [id])
   weeks      Week[]    // Un plan contient plusieurs semaines
   sessions   Session[] // Garde la relation directe aussi
+  users      UserTrainingPlan[]
+}
+
+model UserTrainingPlan {
+  id             Int          @id @default(autoincrement())
+  user_id        Int
+  training_plan_id Int
+  started_at     DateTime     @default(now())
+  user           User         @relation(fields: [user_id], references: [id])
+  trainingPlan   TrainingPlan @relation(fields: [training_plan_id], references: [id])
+
+  @@unique([user_id, training_plan_id])
 }
 
 model Week {

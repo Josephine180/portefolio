@@ -12,6 +12,25 @@ export async function getAllUsers(req, res) {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+// Récupérer un utilisateur avec l'id
+export const getUserbyEmail = async (req, res) => {
+  const email = parseInt(req.body.email); // transformation de l'ID depuis l'URL en nombre(int)
+  if (!(email)) {
+    return res.status(400).json({ error: 'email invalide'});
+  }
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: email}, //on cherche l'utilisateur avec cet ID
+    });
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé'});
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur serveur'});
+  }
+  };
 
 // Récupérer un utilisateur avec l'id
 export const getUserbyId = async (req, res) => {
@@ -123,7 +142,8 @@ export const register = async (req, res) => {
         email,
         password_hash: hashedPassword,
         name,
-        firstname
+        firstname,
+        role: "user",
       }
     });
 
@@ -144,7 +164,11 @@ export const login = async (req, res) => {
     const isValid = await bcrypt.compare(password, user.password_hash);
     if (!isValid) return res.status(401).json({ error: 'Identifiants invalides.' });
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '4h' });
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '4h' }
+    );
 
     res.json({ message: 'Connexion réussie', token });
   } catch (err) {
