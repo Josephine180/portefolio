@@ -9,7 +9,7 @@ import weekRoutes from './routes/week.routes.js';
 import cors from 'cors';
 const app = express();
 
-
+app.use(express.static('frontend'));
 app.use(express.json())
 app.use(cors());
 

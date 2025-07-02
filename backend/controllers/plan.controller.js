@@ -25,31 +25,39 @@ export const createTrainingPlan = async (req, res) => {
 };
 
 // Récupérer les training plans d'un user
-export const getTrainingPlansByUser = async (req, res) => {
-  const userId = parseInt(req.params.userId);
-  
-  if (isNaN(userId)) {
-    return res.status(400).json({ error: 'ID invalide' });
-  }
+export const getUserActiveTrainingPlan = async (req, res) => {
+  const userId = req.user.userId; // depuis le token JWT
 
   try {
-    const plans = await prisma.trainingPlan.findMany({
+    // Trouver l'association UserTrainingPlan avec les détails du plan
+    const userPlan = await prisma.userTrainingPlan.findFirst({
       where: { user_id: userId },
       include: {
-        weeks: {
+        trainingPlan: {
           include: {
+            weeks: {
+              include: {
+                sessions: true
+              }
+            },
             sessions: true,
-          },
-        },
-        sessions: true,
+          }
+        }
       }
     });
-    res.json(plans);
+
+    if (!userPlan) {
+      return res.status(404).json({ error: 'Aucun plan actif trouvé pour cet utilisateur' });
+    }
+
+    res.json(userPlan.trainingPlan);
   } catch (error) {
-    console.error('Erreur de récupération des plans:', error);
+    console.error("Erreur récupération plan utilisateur", error);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+
+
 
 // Récupérer tous les training plans
 export const getAllTrainingPlans = async (req, res) => {
