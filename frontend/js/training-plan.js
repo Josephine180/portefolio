@@ -43,6 +43,7 @@ function startPlan(programId) {
 
   fetch('http://localhost:3000/training-plans/start', {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

@@ -37,10 +37,18 @@ export const getUserActiveTrainingPlan = async (req, res) => {
           include: {
             weeks: {
               include: {
-                sessions: true
+                sessions: {
+                  include: {
+                    nutritionTip: true,
+                  }
+                }
               }
             },
-            sessions: true,
+            sessions: {
+              include: {
+                nutritionTip: true
+              }
+            },
           }
         }
       }
@@ -66,10 +74,18 @@ export const getAllTrainingPlans = async (req, res) => {
       include: {
         weeks: {
           include: {
-            sessions: true,
+            sessions: {
+              include: {
+                nutritionTip: true
+              }
+            }
           },
         },
-        sessions: true,
+        sessions: {
+          include: {
+            nutritionTip: true
+          }
+        },
       },
     });
     res.json(plans);
@@ -161,6 +177,50 @@ export const startTrainingPlan = async (req, res) => {
     res.status(201).json(userTrainingPlan);
   } catch (error) {
     console.error('Erreur de démarrage du plan', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+};
+
+export const getUserActiveTrainingPlans = async (req, res) => {
+  const userId = req.user.userId;
+  console.log('UserID:', usrerId);
+
+  try {
+    // Trouver toutes les associations user-plan
+    const userPlans = await prisma.userTrainingPlan.findMany({
+      where: { user_id: userId },
+      include: {
+        trainingPlan: {
+          include: {
+            weeks: {
+              include: {
+                sessions: {
+                  include: {
+                    nutritionTip: true,
+                  }
+                }
+              }
+            },
+            sessions: {
+              include: {
+                nutritionTip: true
+              }
+            },
+          }
+        }
+      }
+    });
+
+    if (!userPlans.length) {
+      return res.status(404).json({ error: 'Aucun plan actif trouvé pour cet utilisateur' });
+    }
+
+    // Extraire juste les trainingPlans pour simplifier le front
+    const plans = userPlans.map(up => up.trainingPlan);
+
+    res.json(plans);
+  } catch (error) {
+    console.error("Erreur récupération plans utilisateur", error);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };

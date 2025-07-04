@@ -11,12 +11,12 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
+      credentials: 'include'
     });
 
     const data = await response.json();
 
     if (response.ok) {
-      localStorage.setItem('token', data.token);
       alert('Connexion réussie !');
       window.location.href = 'dashboard.html';
     } else {

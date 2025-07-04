@@ -14,7 +14,7 @@ export async function getAllUsers(req, res) {
 };
 // Récupérer un utilisateur avec l'id
 export const getUserbyEmail = async (req, res) => {
-  const email = parseInt(req.body.email); // transformation de l'ID depuis l'URL en nombre(int)
+  const email = req.body.email; // transformation de l'ID depuis l'URL en nombre(int)
   if (!(email)) {
     return res.status(400).json({ error: 'email invalide'});
   }
@@ -54,7 +54,7 @@ export const getUserbyId = async (req, res) => {
 
 //Créer un novel utilisateur
 export async function createUser(req, res) {
-  const { email, password_hash, name } = req.body;
+  const { email, password_hash, name, firstname } = req.body; // Ajout de firstname
   // verification des champs obligatoires
   if (!email || !password_hash) {
     return res.status(400).json({ error: 'Email et mot de pass requis'});
@@ -71,13 +71,16 @@ export async function createUser(req, res) {
       return res.status(400).json({ error: 'Email deja utilisé'});
     }
 
+    // Hash du mot de passe
+    const hashedPassword = await bcrypt.hash(password_hash, 10);
+
     //creation de l'utilisateur
     const newUser = await prisma.user.create({
       data: { 
         email,
-        password_hash: hashedPassword,
+        password_hash: hashedPassword, // Maintenant déclaré
         name,
-        firstname,
+        firstname, // Maintenant déclaré
       },
     });
     res.status(201).json(newUser);
@@ -86,7 +89,6 @@ export async function createUser(req, res) {
     res.status(500).json({ error: 'Erreur serveur'});
   }
 };
-
 // Modifier un utilisateur
 export const modifyUser = async(req, res) => {
   const id = parseInt(req.params.id);
@@ -170,9 +172,23 @@ export const login = async (req, res) => {
       { expiresIn: '4h' }
     );
 
-    res.json({ message: 'Connexion réussie', token });
+    // Envoie le token dans un cookie sécurisé
+    res.cookie('token', token, {
+      httpOnly: true,       // Le JS côté client ne peut pas accéder au cookie
+      secure: false,
+      sameSite: 'lax',
+      path: '/',   // Protection CSRF
+      maxAge: 4 * 60 * 60 * 1000, // 4 heures
+    });
+
+    res.json({ message: 'Connexion réussie' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erreur serveur.' });
   }
+};
+
+export const logout = (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Déconnexion réussie' });
 };

@@ -11,6 +11,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     const API_URL = 'http://localhost:3000/users';
     const response = await fetch(`${API_URL}/register`, {
       method:'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({firstname, name, email, password}),
     });

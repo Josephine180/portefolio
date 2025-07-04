@@ -111,3 +111,45 @@ export const SessionFeedback = async (req, res) => {
     res.status(500).json({ error: "Impossible d'ajouter le feedback" });
   }
 };
+
+export const getFeedbacksBySessionId = async (req, res) => {
+  const sessionId = parseInt(req.params.id);
+
+  try {
+    const feedbacks = await prisma.feedback.findMany({
+      where: { session_id: sessionId } // bien utiliser session_id
+    });
+
+    if (!feedbacks || feedbacks.length === 0) {
+      return res.status(404).json({ message: 'Aucun feedback trouvé pour cette session' });
+    }
+
+    res.json(feedbacks);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur serveur lors de la récupération des feedbacks' });
+  }
+}
+
+export const markSessionAsUncompleted = async (req, res) => {
+  const sessionId = parseInt(req.params.id);
+  try {
+    const existingSession = await prisma.session.findUnique({
+      where: { id: sessionId, userId: req.user.id }
+    });
+
+    if (!existingSession) {
+      return res.status(404).json({ error: "Session introuvable." });
+    }
+
+    const updatedSession = await prisma.session.update({
+      where: { id: sessionId },
+      data: { completed: false },
+    });
+
+    res.json(updatedSession);
+  } catch (error) {
+    console.error("Erreur PATCH session :", error);
+    res.status(500).json({ error: "Impossible de marquer la session comme complétée." });
+  }
+};
