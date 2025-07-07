@@ -1,7 +1,6 @@
 import { PrismaClient } from '../generated/prisma/index.js';
 import fs from 'fs';
 import path from 'path';
-import { getUserbyEmail } from '../controllers/user.controller.js';
 
 const prisma = new PrismaClient();
 

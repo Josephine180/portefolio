@@ -14,7 +14,7 @@ export async function getAllUsers(req, res) {
 };
 // Récupérer un utilisateur avec l'id
 export const getUserbyEmail = async (req, res) => {
-  const email = parseInt(req.body.email); // transformation de l'ID depuis l'URL en nombre(int)
+  const email = req.body.email; // transformation de l'ID depuis l'URL en nombre(int)
   if (!(email)) {
     return res.status(400).json({ error: 'email invalide'});
   }
@@ -54,7 +54,7 @@ export const getUserbyId = async (req, res) => {
 
 //Créer un novel utilisateur
 export async function createUser(req, res) {
-  const { email, password_hash, name } = req.body;
+  const { email, password_hash, name, firstname } = req.body; // Ajout de firstname
   // verification des champs obligatoires
   if (!email || !password_hash) {
     return res.status(400).json({ error: 'Email et mot de pass requis'});
@@ -71,13 +71,16 @@ export async function createUser(req, res) {
       return res.status(400).json({ error: 'Email deja utilisé'});
     }
 
+    // Hash du mot de passe
+    const hashedPassword = await bcrypt.hash(password_hash, 10);
+
     //creation de l'utilisateur
     const newUser = await prisma.user.create({
       data: { 
         email,
-        password_hash: hashedPassword,
+        password_hash: hashedPassword, // Maintenant déclaré
         name,
-        firstname,
+        firstname, // Maintenant déclaré
       },
     });
     res.status(201).json(newUser);
@@ -86,7 +89,6 @@ export async function createUser(req, res) {
     res.status(500).json({ error: 'Erreur serveur'});
   }
 };
-
 // Modifier un utilisateur
 export const modifyUser = async(req, res) => {
   const id = parseInt(req.params.id);
@@ -157,12 +159,20 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email et mot de passe requis.' });
+  }
+
   try {
     const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) return res.status(401).json({ error: 'Identifiants invalides.' });
+    if (!user) {
+      return res.status(401).json({ error: 'Identifiants invalides.' });
+    }
 
     const isValid = await bcrypt.compare(password, user.password_hash);
-    if (!isValid) return res.status(401).json({ error: 'Identifiants invalides.' });
+    if (!isValid) {
+      return res.status(401).json({ error: 'Identifiants invalides.' });
+    }
 
     const token = jwt.sign(
       { userId: user.id, role: user.role },
@@ -170,9 +180,40 @@ export const login = async (req, res) => {
       { expiresIn: '4h' }
     );
 
-    res.json({ message: 'Connexion réussie', token });
+    // Envoie le token dans un cookie sécurisé
+    res.cookie('token', token, {
+      httpOnly: true,       // Empêche l'accès JavaScript côté client
+      secure: false,        // true en production avec HTTPS
+      sameSite: 'lax',      // Protection CSRF
+      path: '/',
+      maxAge: 4 * 60 * 60 * 1000, // 4 heures en millisecondes
+    });
+
+    // Réponse sans le token (il est dans le cookie)
+    res.json({ 
+      message: 'Connexion réussie',
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        firstname: user.firstname,
+        role: user.role
+      }
+    });
   } catch (err) {
-    console.error(err);
+    console.error('Erreur lors de la connexion:', err);
     res.status(500).json({ error: 'Erreur serveur.' });
   }
+};
+
+export const logout = (req, res) => {
+  // Supprime le cookie en définissant une date d'expiration passée
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: false,        // true en production avec HTTPS
+    sameSite: 'lax',
+    path: '/'
+  });
+  
+  res.json({ message: 'Déconnexion réussie' });
 };

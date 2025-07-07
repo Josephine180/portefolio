@@ -37,10 +37,18 @@ export const getUserActiveTrainingPlan = async (req, res) => {
           include: {
             weeks: {
               include: {
-                sessions: true
+                sessions: {
+                  include: {
+                    nutritionTip: true,
+                  }
+                }
               }
             },
-            sessions: true,
+            sessions: {
+              include: {
+                nutritionTip: true
+              }
+            },
           }
         }
       }
@@ -66,10 +74,18 @@ export const getAllTrainingPlans = async (req, res) => {
       include: {
         weeks: {
           include: {
-            sessions: true,
+            sessions: {
+              include: {
+                nutritionTip: true
+              }
+            }
           },
         },
-        sessions: true,
+        sessions: {
+          include: {
+            nutritionTip: true
+          }
+        },
       },
     });
     res.json(plans);
@@ -108,26 +124,41 @@ export const getTrainingPlanById = async (req, res) => {
   }
 };
 
-// Démarrer un training plan (associer un utilisateur à un plan existant)
 export const startTrainingPlan = async (req, res) => {
-  const userId = req.user.userId;
+  console.log('🚀 === startTrainingPlan APPELÉE ===');
+  console.log('📨 req.body:', JSON.stringify(req.body, null, 2));
+  console.log('👤 req.user:', JSON.stringify(req.user, null, 2));
+  
+  const userId = req.user?.userId;
   const { training_plan_id } = req.body;
+  
+  console.log('🔍 userId extraite:', userId);
+  console.log('🔍 training_plan_id reçu:', training_plan_id);
+  console.log('🔍 Type de training_plan_id:', typeof training_plan_id);
 
   if (!training_plan_id) {
+    console.log('❌ training_plan_id manquant dans req.body');
     return res.status(400).json({ error: 'training_plan_id est requis' });
   }
 
+  if (!userId) {
+    console.log('❌ userId manquant dans req.user');
+    return res.status(401).json({ error: 'Utilisateur non authentifié' });
+  }
+
   try {
-    // Vérifier si le plan existe
+    console.log('🔍 Vérification de l\'existence du plan...');
     const planExists = await prisma.trainingPlan.findUnique({
       where: { id: training_plan_id }
     });
+    console.log('📋 Plan trouvé:', planExists ? `OUI (${planExists.goal_type})` : 'NON');
 
     if (!planExists) {
+      console.log('❌ Plan non trouvé avec ID:', training_plan_id);
       return res.status(404).json({ error: 'Plan d\'entraînement non trouvé' });
     }
 
-    // Vérifier si l'utilisateur n'a pas déjà commencé ce plan
+    console.log('🔍 Vérification des associations existantes...');
     const existingUserPlan = await prisma.userTrainingPlan.findUnique({
       where: {
         user_id_training_plan_id: {
@@ -136,12 +167,17 @@ export const startTrainingPlan = async (req, res) => {
         }
       }
     });
+    console.log('🔗 Association existante:', existingUserPlan ? `OUI (ID: ${existingUserPlan.id})` : 'NON');
 
     if (existingUserPlan) {
-      return res.status(400).json({ error: 'Vous avez déjà commencé ce plan d\'entraînement' });
+      console.log('⚠️ Plan déjà démarré par cet utilisateur');
+      return res.status(400).json({ 
+        error: 'Vous avez déjà commencé ce plan d\'entraînement',
+        existingAssociation: existingUserPlan.id
+      });
     }
 
-    // Créer l'association utilisateur-plan
+    console.log('➕ Création de la nouvelle association...');
     const userTrainingPlan = await prisma.userTrainingPlan.create({
       data: {
         user_id: userId,
@@ -157,10 +193,102 @@ export const startTrainingPlan = async (req, res) => {
         }
       }
     });
+    
+    console.log('🎉 Association créée avec succès:', userTrainingPlan.id);
+    console.log('✅ UserID', userId, '→ Plan', planExists.goal_type);
 
-    res.status(201).json(userTrainingPlan);
+    res.status(201).json({
+      message: 'Plan démarré avec succès',
+      association: userTrainingPlan,
+      planType: planExists.goal_type
+    });
+    
   } catch (error) {
-    console.error('Erreur de démarrage du plan', error);
-    res.status(500).json({ error: 'Erreur serveur' });
+    console.error('💥 Erreur dans startTrainingPlan:', error);
+    console.error('Stack trace:', error.stack);
+    res.status(500).json({ 
+      error: 'Erreur serveur lors du démarrage du plan',
+      details: error.message 
+    });
+  }
+};
+
+export const getUserActiveTrainingPlans = async (req, res) => {
+  const userId = req.user.userId;
+  console.log('🔍 getUserActiveTrainingPlans - START');
+  console.log('👤 UserID:', userId);
+  console.log('🔧 Type de userId:', typeof userId);
+
+  try {
+    console.log('📊 Comptage des associations...');
+    
+    // D'abord compter les associations pour debug
+    const totalUserPlans = await prisma.userTrainingPlan.count();
+    console.log('📈 Total associations dans la base:', totalUserPlans);
+    
+    const userSpecificCount = await prisma.userTrainingPlan.count({
+      where: { user_id: userId }
+    });
+    console.log('📊 Associations pour userId', userId, ':', userSpecificCount);
+
+    // Lister TOUTES les associations pour debug
+    const allAssociations = await prisma.userTrainingPlan.findMany({
+      select: { user_id: true, training_plan_id: true, id: true }
+    });
+    console.log('🔗 Toutes les associations:', allAssociations);
+
+    console.log('🔍 Recherche des plans pour userId:', userId);
+    
+    const userPlans = await prisma.userTrainingPlan.findMany({
+      where: { user_id: userId },
+      include: {
+        trainingPlan: {
+          include: {
+            weeks: {
+              include: {
+                sessions: {
+                  include: {
+                    nutritionTip: true,
+                  }
+                }
+              }
+            },
+            sessions: {
+              include: {
+                nutritionTip: true
+              }
+            },
+          }
+        }
+      }
+    });
+
+    console.log('📋 UserPlans trouvés:', userPlans.length);
+    console.log('📋 Détail userPlans:', JSON.stringify(userPlans, null, 2));
+
+    if (!userPlans.length) {
+      console.log('❌ Aucun plan trouvé - retour 404');
+      return res.status(404).json({ 
+        error: 'Aucun plan actif trouvé pour cet utilisateur',
+        debug: {
+          userId: userId,
+          totalAssociations: totalUserPlans,
+          userAssociations: userSpecificCount,
+          allAssociations: allAssociations
+        }
+      });
+    }
+
+    // Extraire juste les trainingPlans pour simplifier le front
+    const plans = userPlans.map(up => up.trainingPlan);
+    console.log('✅ Plans extraits:', plans.length);
+    console.log('📤 Envoi des plans au frontend');
+    
+    res.json(plans);
+    
+  } catch (error) {
+    console.error("💥 Erreur dans getUserActiveTrainingPlans:", error);
+    console.error("Stack trace:", error.stack);
+    res.status(500).json({ error: 'Erreur serveur', details: error.message });
   }
 };

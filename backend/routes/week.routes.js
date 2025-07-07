@@ -1,6 +1,6 @@
 import express from 'express';
 import { getWeeksByPlanId, getWeekById, createWeek, updateWeek, deleteWeek } from '../controllers/week.controller.js';
-import authenticate, { isAdmin } from '../middlewares/auth.js';
+import {authenticate, isAdmin } from '../middlewares/auth.js';
 
 const router = express.Router();
 
